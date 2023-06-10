@@ -6,33 +6,38 @@ Your task is to create a RESTful API that allows users to manage their education
 records. You need to implement the following APIs:
 
 Create a new education record:
-Endpoint: POST /api/education
-Request body: Education JSON object
-Response: The created education record with a generated ID
-Retrieve all education records for a user:
-Endpoint: GET /api/educations/{userId}
-Response: An array of Education JSON objects representing the user's education history
-Retrieve a specific education record by ID:
-Endpoint: GET /api/education/{id}
-Response: Education JSON object representing the specified education record
-Update an education record:
-Endpoint: PUT /api/education/{id}
-Request body: Updated Education JSON object
-Response: The updated education record
-Delete an education record:
-Endpoint: DELETE /api/education/{id}
-Response: A success message indicating the education record has been deleted
-Retrieve all unique users for a given institution ID, sorted by their “Name/Email”:
-Endpoint: GET /api/education/users
-Parameters:
-institutionId (string) - ID of the institution
-sortBy (string, optional) - Field to sort the results (e.g., "name", "email")
-sortDirection (string, optional) - Sorting direction ("asc" for ascending, "desc" for descending)
-page (integer, optional) - Page number for pagination
-pageSize (integer, optional) - Number of results per page
-Response: An array of User JSON objects representing the unique users associated with the given institution ID, sorted and paginated
-Extend the point 6 to include the sorting based on users connections. I.e users in the response list connected to the api calling user should show in the top.
-Assume the necessary services for pulling the user's connection are there. 
+	1.Endpoint: POST /api/education
+		Request body: Education JSON object
+		Response: The created education record with a generated ID
+		Retrieve all education records for a user:
+		
+	2.Endpoint: GET /api/educations/{userId}
+		Response: An array of Education JSON objects representing the user's education history
+		Retrieve a specific education record by ID:
+		
+	3.Endpoint: GET /api/education/{id}
+		Response: Education JSON object representing the specified education record
+		Update an education record:
+		
+	4.Endpoint: PUT /api/education/{id}
+		Request body: Updated Education JSON object
+		Response: The updated education record
+		Delete an education record:
+		
+	5.Endpoint: DELETE /api/education/{id}
+		Response: A success message indicating the education record has been deleted
+		Retrieve all unique users for a given institution ID, sorted by their “Name/Email”:
+		Endpoint: GET /api/education/users
+		Parameters:
+		institutionId (string) - ID of the institution
+		sortBy (string, optional) - Field to sort the results (e.g., "name", "email")
+		sortDirection (string, optional) - Sorting direction ("asc" for ascending, "desc" for descending)
+		page (integer, optional) - Page number for pagination
+		pageSize (integer, optional) - Number of results per page
+		Response: An array of User JSON objects representing the unique users associated with the given institution ID, sorted and paginated
+		Extend the point 6 to include the sorting based on users connections. I.e users in the response list connected to the api calling user should show in the top.
+		Assume the necessary services for pulling the user's connection are there. 
+		
 Bonus: 
 Think about how we can extend point 7 to use the users degree of connectivity in the sorting as well. For example, direct connection comes on top, followed by 
 2nd degree connection, and so on and so forth.
