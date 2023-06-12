@@ -66,7 +66,7 @@ Expertise in creating reusable code.
 The goal of this task is to provide a discussion context for the subsequent technical interview and is not meant to be time consuming. Although it is intended for all levels of Backend Developers, we expect more attention to detail the more experienced you are. The time to complete this project will depend on your expertise, but based on our own employees executing this task, we estimate that it should not take more than 5-8 hours depending on your proficiency. We understand and honor that you have a life outside work so we recommend that you do not exceed the above mentioned limit. Do not invest your time into implementing additional business requirements that are not listed and please leave the application design unchanged. You can use the template starter code which contains the structure of the codebase and some sample code for reference. 
 
 ## Useful links:
-Spring Initializer
-Introduction to Spring Data MongoDB
-Connection to Mongo DB
+* [Spring Initializer](https://start.spring.io)
+* [Introduction to Spring Data MongoDB](https://www.baeldung.com/spring-data-mongodb-tutorial)
+* [Connection to Mongo DB](https://www.mongodb.com/docs/404/)
 
