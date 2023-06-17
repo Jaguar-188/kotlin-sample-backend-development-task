@@ -24,7 +24,7 @@ class UserEducationController(private val userEducationService: UserEducationSer
     @GetMapping("api/education/getAllUsersEducationHistory")
     @Operation(description = "This API endpoint fetches all the user's education history..",
                method = "GET")
-    fun getAllUser() : List<UserEducationHistory> = userEducationService.getUserEducationDetails();
+    fun getAllUsersEducationHistory() : List<UserEducationHistory> = userEducationService.getUserEducationDetails();
 
     @GetMapping("api/education/getUsersEducationHistory/{userId}")
     @Operation(description = "This API endpoint fetches all the education history of requested user..",
