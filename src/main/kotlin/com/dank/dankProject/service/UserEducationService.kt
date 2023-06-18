@@ -39,7 +39,11 @@ class UserEducationService(private var userRepository : UserRepository) {
                             userId = userDetails.userId,
                             publicId = userDetails.publicId,
                             institutionId = userDetails.institutionId,
-                            degree = userDetails.degree
+                            institutionName = userDetails.institutionName,
+                            degree = userDetails.degree,
+                            name = userDetails.name,
+                            email = userDetails.email,
+                            mobileNumber = userDetails.mobileNumber
                     )
             )
         } else {
@@ -56,5 +60,38 @@ class UserEducationService(private var userRepository : UserRepository) {
         } else {
             throw Exception("User Not Found Exception")
         }
+    }
+
+    /***
+     * Fetches all the records/documents of requested institutionId from collection with requested
+     * parameters
+     */
+    fun getUsersEducationHistoryUsingInstitutionId(institutionId: String,sortBy : String,sortDirection : String): List<UserEducationHistory> {
+
+        lateinit var userDetailResponse: List<UserEducationHistory>
+        if (userRepository.existsByInstitutionId(institutionId)) {
+            if (sortBy.isNotEmpty() && sortDirection.isNotEmpty()) {
+                if (sortBy.contentEquals("name")) {
+                    if (sortDirection.contentEquals("asc")) {
+                        userDetailResponse = userRepository.findByInstitutionId(institutionId).sortedBy { it.name }
+                    } else if (sortDirection.contentEquals("desc")) {
+                        userDetailResponse = userRepository.findByInstitutionId(institutionId).sortedByDescending { it.name }
+                    }
+                }
+                if (sortBy.contentEquals("email")) {
+                    if (sortDirection.contentEquals("asc")) {
+                        userDetailResponse = userRepository.findByInstitutionId(institutionId).sortedBy { it.email }
+                    } else if (sortDirection.contentEquals("desc")) {
+                        userDetailResponse = userRepository.findByInstitutionId(institutionId).sortedByDescending { it.email }
+                    }
+                }
+            } else {
+                userDetailResponse = userRepository.findByInstitutionId(institutionId);
+            }
+        }
+        else{
+            throw Exception("InstitutionId Not Found Exception");
+        }
+        return userDetailResponse
     }
 }
