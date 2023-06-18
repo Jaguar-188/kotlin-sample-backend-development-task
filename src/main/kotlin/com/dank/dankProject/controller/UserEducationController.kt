@@ -44,4 +44,13 @@ class UserEducationController(private val userEducationService: UserEducationSer
     fun deleteUserEducationHistory(@PathVariable("userId") userId: String)
     : Unit = userEducationService.deleteUserEducationHistory(userId);
 
+    @GetMapping("api/education/getUsersEducationHistoryUsingInstitutionId/{institutionId}")
+    @Operation(description = "This API endpoint fetches the records using institutionId and some other requested " +
+            "parameters..", method = "GET")
+    fun getUsersEducationHistoryUsingInstitutionId(@PathVariable("institutionId") institutionId : String,
+                                                   @RequestParam(required = false, defaultValue = "") sortBy: String,
+                                                   @RequestParam(required = false, defaultValue = "") sortDirection: String,
+                                                   @RequestParam(required = false, defaultValue = "0") page: Int)
+    : List<UserEducationHistory> = userEducationService.getUsersEducationHistoryUsingInstitutionId(institutionId,sortBy,sortDirection);
+
 }
