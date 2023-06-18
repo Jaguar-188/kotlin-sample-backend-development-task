@@ -15,42 +15,48 @@ import java.util.*
 class UserEducationController(private val userEducationService: UserEducationService) {
 
     @PostMapping("/api/education/saveUsersEducationHistory")
-    @Operation(description = "This API endpoint adds the record/document to the collection..",
+    @Operation(summary = "This API endpoint adds the record/document to the collection..",
+               description = "Provide the details by excluding userId field as it is auto-generated..",
                method = "POST")
     fun saveUserEducationDetails(@RequestBody userDetails: UserEducationHistory)
     : UserEducationHistory = userEducationService.saveUserEducationDetails(userDetails);
 
 
     @GetMapping("api/education/getAllUsersEducationHistory")
-    @Operation(description = "This API endpoint fetches all the user's education history..",
+    @Operation(summary = "This API endpoint fetches all the user's education history..",
+               description = "Doesn't need to provide any thing as request parameter..",
                method = "GET")
     fun getAllUsersEducationHistory() : List<UserEducationHistory> = userEducationService.getUserEducationDetails();
 
     @GetMapping("api/education/getUsersEducationHistory/{userId}")
-    @Operation(description = "This API endpoint fetches all the education history of requested user..",
-            method = "GET")
+    @Operation(summary = "This API endpoint fetches all the education history of requested user..",
+               description = "Provide any userId from the collection..",
+               method = "GET")
     fun getUserEducationHistoryUsingId(@PathVariable("userId") userId: String)
     : Optional<UserEducationHistory> = userEducationService.getUserEducationHistoryUsingId(userId);
 
     @PutMapping("api/education/updateUsersEducationHistory")
-    @Operation(description = "This API endpoint updates the education history of requested user..",
-            method = "PUT")
+    @Operation(summary = "This API endpoint updates the education history of requested user..",
+               description = "Provide the updated request body along with userId..",
+               method = "PUT")
     fun updateUserEducationHistory(@RequestBody userDetails: UserEducationHistory)
     : UserEducationHistory = userEducationService.updateUserEducationHistory(userDetails);
 
     @DeleteMapping("api/education/deleteUsersEducationHistory/{userId}")
-    @Operation(description = "This API endpoint deletes all the education history of requested user..",
-            method = "DELETE")
+    @Operation(summary = "This API endpoint deletes all the education history of requested user..",
+               description = "Provide the userId from the collection..",
+               method = "DELETE")
     fun deleteUserEducationHistory(@PathVariable("userId") userId: String)
     : Unit = userEducationService.deleteUserEducationHistory(userId);
 
     @GetMapping("api/education/getUsersEducationHistoryUsingInstitutionId/{institutionId}")
-    @Operation(description = "This API endpoint fetches the records using institutionId and some other requested " +
-            "parameters..", method = "GET")
+    @Operation(summary = "This API endpoint fetches the records using institutionId and some other requested parameters..",
+               description = "Provide institutionId which is a required parameter and sort options if required",
+               method = "GET")
     fun getUsersEducationHistoryUsingInstitutionId(@PathVariable("institutionId") institutionId : String,
                                                    @RequestParam(required = false, defaultValue = "") sortBy: String,
                                                    @RequestParam(required = false, defaultValue = "") sortDirection: String,
-                                                   @RequestParam(required = false, defaultValue = "0") page: Int)
+                                                   @RequestParam(required = false, defaultValue = "0") page: String)
     : List<UserEducationHistory> = userEducationService.getUsersEducationHistoryUsingInstitutionId(institutionId,sortBy,sortDirection);
 
 }
