@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository
 @Repository
 interface UserRepository : MongoRepository<UserEducationHistory,String> {
 
-    fun findByInstitutionId(@Param("institutionId") institutionId : String) : List<UserEducationHistory>
+    fun findByInstitutionId(@Param("institutionId") institutionId: String, @Param("pageable") pageable: org.springframework.data.domain.Pageable) : List<UserEducationHistory>
 
     fun existsByInstitutionId(@Param("institutionId") institutionId : String) : Boolean
 

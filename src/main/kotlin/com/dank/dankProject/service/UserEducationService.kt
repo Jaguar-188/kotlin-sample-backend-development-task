@@ -2,6 +2,9 @@ package com.dank.dankProject.service
 
 import com.dank.dankProject.model.UserEducationHistory
 import com.dank.dankProject.repository.UserRepository
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import java.util.*
 import kotlin.Exception
@@ -66,30 +69,36 @@ class UserEducationService(private var userRepository : UserRepository) {
      * Fetches all the records/documents of requested institutionId from collection with requested
      * parameters
      */
-    fun getUsersEducationHistoryUsingInstitutionId(institutionId: String,sortBy : String,sortDirection : String): List<UserEducationHistory> {
-
+    fun getUsersEducationHistoryUsingInstitutionId(institutionId: String,sortBy : String,
+                                                   sortDirection : String,
+                                                   pageNumber : String,
+                                                   pageSize : String)
+    : List<UserEducationHistory> {
         lateinit var userDetailResponse: List<UserEducationHistory>
+        lateinit var pageable : Pageable;
         if (userRepository.existsByInstitutionId(institutionId)) {
+            pageable = PageRequest.of(Integer.parseInt(pageNumber),Integer.parseInt(pageSize));
             if (sortBy.isNotEmpty() && sortDirection.isNotEmpty()) {
                 if (sortBy.contentEquals("name")) {
                     if (sortDirection.contentEquals("asc")) {
-                        userDetailResponse = userRepository.findByInstitutionId(institutionId).sortedBy { it.name }
+                        userDetailResponse = userRepository.findByInstitutionId(institutionId,pageable).sortedBy { it.name }
                     } else if (sortDirection.contentEquals("desc")) {
-                        userDetailResponse = userRepository.findByInstitutionId(institutionId).sortedByDescending { it.name }
+                        userDetailResponse = userRepository.findByInstitutionId(institutionId,pageable).sortedByDescending { it.name }
                     }
                 }
                 if (sortBy.contentEquals("email")) {
                     if (sortDirection.contentEquals("asc")) {
-                        userDetailResponse = userRepository.findByInstitutionId(institutionId).sortedBy { it.email }
+                        userDetailResponse = userRepository.findByInstitutionId(institutionId,pageable).sortedBy { it.email }
                     } else if (sortDirection.contentEquals("desc")) {
-                        userDetailResponse = userRepository.findByInstitutionId(institutionId).sortedByDescending { it.email }
+                        userDetailResponse = userRepository.findByInstitutionId(institutionId,pageable).sortedByDescending { it.email }
                     }
                 }
-            } else {
-                userDetailResponse = userRepository.findByInstitutionId(institutionId);
+            }
+            else {
+                userDetailResponse = userRepository.findByInstitutionId(institutionId,pageable);
             }
         }
-        else{
+        else {
             throw Exception("InstitutionId Not Found Exception");
         }
         return userDetailResponse
