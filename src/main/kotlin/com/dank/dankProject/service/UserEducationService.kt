@@ -69,36 +69,60 @@ class UserEducationService(private var userRepository : UserRepository) {
      * Fetches all the records/documents of requested institutionId from collection with requested
      * parameters
      */
-    fun getUsersEducationHistoryUsingInstitutionId(institutionId: String,sortBy : String,
+    fun getUsersEducationHistoryUsingInstitutionId(institutionId: String,
+                                                   sortBy : String,
                                                    sortDirection : String,
                                                    pageNumber : String,
                                                    pageSize : String)
     : List<UserEducationHistory> {
         lateinit var userDetailResponse: List<UserEducationHistory>
         lateinit var pageable : Pageable;
-        if (userRepository.existsByInstitutionId(institutionId)) {
-            pageable = PageRequest.of(Integer.parseInt(pageNumber),Integer.parseInt(pageSize));
-            if (sortBy.isNotEmpty() && sortDirection.isNotEmpty()) {
-                if (sortBy.contentEquals("name")) {
-                    if (sortDirection.contentEquals("asc")) {
-                        userDetailResponse = userRepository.findByInstitutionId(institutionId,pageable).sortedBy { it.name }
-                    } else if (sortDirection.contentEquals("desc")) {
-                        userDetailResponse = userRepository.findByInstitutionId(institutionId,pageable).sortedByDescending { it.name }
+        if (userRepository.existsByInstitutionId(institutionId))
+        {
+            if (sortBy.isNotEmpty() && sortDirection.isNotEmpty())
+            {
+                if (sortBy.contentEquals("name"))
+                {
+                    if (sortDirection.contentEquals("asc"))
+                    {
+                        pageable = PageRequest.of(Integer.parseInt(pageNumber),
+                                                  Integer.parseInt(pageSize),
+                                                  Sort.by(Sort.Direction.ASC,sortBy));
+                        userDetailResponse = userRepository.findByInstitutionId(institutionId,pageable)
+                    } else if (sortDirection.contentEquals("desc"))
+                    {
+                        pageable = PageRequest.of(Integer.parseInt(pageNumber),
+                                                  Integer.parseInt(pageSize),
+                                                  Sort.by(Sort.Direction.DESC,sortBy));
+                        userDetailResponse = userRepository.findByInstitutionId(institutionId,pageable);
                     }
                 }
-                if (sortBy.contentEquals("email")) {
-                    if (sortDirection.contentEquals("asc")) {
-                        userDetailResponse = userRepository.findByInstitutionId(institutionId,pageable).sortedBy { it.email }
-                    } else if (sortDirection.contentEquals("desc")) {
-                        userDetailResponse = userRepository.findByInstitutionId(institutionId,pageable).sortedByDescending { it.email }
+                if (sortBy.contentEquals("email"))
+                {
+                    if (sortDirection.contentEquals("asc"))
+                    {
+                        pageable = PageRequest.of(Integer.parseInt(pageNumber),
+                                                  Integer.parseInt(pageSize),
+                                                  Sort.by(Sort.Direction.ASC,sortBy));
+                        userDetailResponse = userRepository.findByInstitutionId(institutionId,pageable)
+                    } else if (sortDirection.contentEquals("desc"))
+                    {
+                        pageable = PageRequest.of(Integer.parseInt(pageNumber),
+                                                  Integer.parseInt(pageSize),
+                                                  Sort.by(Sort.Direction.DESC,sortBy));
+                        userDetailResponse = userRepository.findByInstitutionId(institutionId,pageable)
                     }
                 }
             }
-            else {
+            else
+            {
+                pageable = PageRequest.of(Integer.parseInt(pageNumber),
+                                          Integer.parseInt(pageSize));
                 userDetailResponse = userRepository.findByInstitutionId(institutionId,pageable);
             }
         }
-        else {
+        else
+        {
             throw Exception("InstitutionId Not Found Exception");
         }
         return userDetailResponse
