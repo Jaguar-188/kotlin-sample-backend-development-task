@@ -56,7 +56,7 @@ class UserEducationController(private val userEducationService: UserEducationSer
     fun getUsersEducationHistoryUsingInstitutionId(@PathVariable("institutionId") institutionId : String,
                                                    @RequestParam(required = false, defaultValue = "") sortBy: String,
                                                    @RequestParam(required = false, defaultValue = "") sortDirection: String,
-                                                   @RequestParam(required = true, defaultValue = "1") pageNumber: String,
+                                                   @RequestParam(required = true, defaultValue = "0") pageNumber: String,
                                                    @RequestParam(required = true, defaultValue = "1") pageSize: String)
     : List<UserEducationHistory> = userEducationService.getUsersEducationHistoryUsingInstitutionId(institutionId,
             sortBy,sortDirection,pageNumber,pageSize);
